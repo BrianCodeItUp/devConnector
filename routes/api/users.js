@@ -5,7 +5,7 @@ const gravator = require('gravatar')
 const bcrpt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../../models/User')
-const keys = require('../../config/key')
+const keys = require('../../config/keys')
 
 /**
  * @route  Post api/users
@@ -57,7 +57,8 @@ router.post('/', [
       (err, token) => {
         if (err) throw err
         res.json({ token })
-      })
+      }
+    )
   } catch (e) {
     console.error('Error occured at register user', e)
     res.status(500).send('Server error')
