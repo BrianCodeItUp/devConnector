@@ -23,11 +23,11 @@ router.post('/', [
   const errors = validationResult(req)
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
   try {
-    const { name, emai, password } = req.body
-    let user = await User.findOne({ emai })
+    const { name, email, password } = req.body
+    let user = await User.findOne({ email })
     if (user) return res.status(400).json({ errors: [{ msg: 'User already exists' }] })
 
-    const avatar = gravator.url(emai, {
+    const avatar = gravator.url(email, {
       s: '200',
       r: 'pg',
       d: 'mm'
@@ -35,7 +35,7 @@ router.post('/', [
 
     user = new User({
       name,
-      emai,
+      email,
       avatar,
       password
     })
