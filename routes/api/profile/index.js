@@ -1,7 +1,8 @@
 const getProfileRouter = require('./get')
 const postProfileRouter = require('./post')
-
-module.exports = {
+const deleteProfileRouter = require('./delete')
+module.exports = [
   getProfileRouter,
-  postProfileRouter
-}
+  postProfileRouter,
+  deleteProfileRouter
+]
