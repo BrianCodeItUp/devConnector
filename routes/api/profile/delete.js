@@ -24,4 +24,25 @@ router.delete('/', auth, async (req, res) => {
     console.error('Error occured at delete profile, uer & post:', e)
   }
 })
+
+/**
+ * @route  Delete api/profile/experience/:exp_id
+ * @desc   Delete experience from profile
+ * @access Private
+ */
+router.delete('/experience/:exp_id', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+    const { exp_id } = req.params
+    // Get remove index
+    const removeIndex = profile.experience.map(exp => exp.id).indexOf(exp_id)
+    profile.experience.splice(removeIndex, 1)
+    await profile.save()
+
+    res.json(profile)
+  } catch (e) {
+    console.error('Error occured at delete user experience of a profile :', e)
+  }
+})
+
 module.exports = router

@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
-const _ = require('lodash')
 const auth = require('../../../middleware/auth')
 const Profile = require('../../../models/Profile')
-const fieldsConfig = require('../../fieldsConfig')
-const utils = require('../../utils')
+const { addGeneralFields, addSocialFields } = require('../../utils/fields')
 
 /**
  * @route  Post api/profile
@@ -54,21 +52,5 @@ router.post('/', [
     console.log('Error occured at update and create profile:', e)
   }
 })
-
-function addFields (fieldCongfig, profileData) {
-  let fieldObj = {}
-  _.forEach(fieldCongfig, (typeSpec, field) => {
-    if (typeSpec !== null) {
-      const { funcName } = typeSpec
-      const func = utils[funcName]
-      func ? fieldObj[field] = func() : console.log(`Utils Not Found: ${funcName}`)
-    }
-    if (profileData[field]) fieldObj[field] = profileData[field]
-  })
-  return { ...fieldObj }
-}
-
-const addGeneralFields = _.partial(addFields, fieldsConfig.GERNERL_FIELDS)
-const addSocialFields = _.partial(addFields, fieldsConfig.SOCIAL_FIELDS)
 
 module.exports = router

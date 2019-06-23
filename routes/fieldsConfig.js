@@ -19,7 +19,18 @@ const SOCIAL_FIELDS = {
   instagram: null
 }
 
+const EXPERENCE_FIELDS = {
+  title: null,
+  company: null,
+  location: null,
+  from: null,
+  to: null,
+  current: null,
+  description: null
+}
+
 module.exports = {
   GERNERL_FIELDS,
-  SOCIAL_FIELDS
+  SOCIAL_FIELDS,
+  EXPERENCE_FIELDS
 }
