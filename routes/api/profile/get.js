@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const request = require('request')
 const auth = require('../../../middleware/auth')
 const Profile = require('../../../models/Profile')
-
+const keys = require('../../../config/keys')
 /**
  * @route  Get api/profile
  * @desc   Get all profiles
@@ -57,6 +58,30 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).send('Server Error')
   }
   res.send('Profile route')
+})
+
+/**
+ * @route  Get api/profile/github/:username
+ * @desc   Get user repos from Github
+ * @access Public
+ */
+router.get('/github/:username', (req, res) => {
+  try {
+    const options = {
+      uri: `https://api.github.com/users/${req.params.username}/repos?per_page=55&sort=created:asc&client_id=${keys.githubClientId}&client_secret=${keys.githubClientSecret}`,
+      method: 'GET',
+      headers: { 'user-agent': 'node.js' }
+    }
+
+    request(options, (err, response, body) => {
+      if (err) console.log(err)
+      if (response.statusCode !== 200) res.status(400).json({ msg: 'No Github profile found' })
+      res.json(JSON.parse(body))
+    })
+  } catch (e) {
+    console.error('Error occured at get user Github repo', e)
+    res.status(500).send('Server Error')
+  }
 })
 
 module.exports = router

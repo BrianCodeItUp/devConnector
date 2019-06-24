@@ -45,4 +45,24 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   }
 })
 
+/**
+ * @route  Delete api/profile/educattion/:edu_id
+ * @desc   Delete education from profile
+ * @access Private
+ */
+router.delete('/education/:edu_id', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+    const { edu_id } = req.params
+    // Get remove index
+    const removeIndex = profile.education.map(edu => edu.id).indexOf(edu_id)
+    profile.education.splice(removeIndex, 1)
+    await profile.save()
+
+    res.json(profile)
+  } catch (e) {
+    console.error('Error occured at delete user education of a profile :', e)
+  }
+})
+
 module.exports = router

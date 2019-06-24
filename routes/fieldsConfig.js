@@ -29,8 +29,19 @@ const EXPERENCE_FIELDS = {
   description: null
 }
 
+const EDUCATION_FIELDS = {
+  school: null,
+  degree: null,
+  fieldofstudy: null,
+  from: null,
+  to: null,
+  current: null,
+  description: null
+}
+
 module.exports = {
   GERNERL_FIELDS,
   SOCIAL_FIELDS,
-  EXPERENCE_FIELDS
+  EXPERENCE_FIELDS,
+  EDUCATION_FIELDS
 }

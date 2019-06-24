@@ -18,9 +18,11 @@ function addFields (fieldCongfig, profileData) {
 const addGeneralFields = _.partial(addFields, fieldsConfig.GERNERL_FIELDS)
 const addSocialFields = _.partial(addFields, fieldsConfig.SOCIAL_FIELDS)
 const addExperienceFields = _.partial(addFields, fieldsConfig.EXPERENCE_FIELDS)
+const addEducationFields = _.partial(addFields, fieldsConfig.EDUCATION_FIELDS)
 
 module.exports = {
   addGeneralFields,
   addSocialFields,
-  addExperienceFields
+  addExperienceFields,
+  addEducationFields
 }
